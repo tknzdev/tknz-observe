@@ -5,11 +5,12 @@ const fs = require('fs');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = async () => {
+  // Start Next.js dev server for the launchpad on a fixed port
   const serverProcess = spawn('yarn', ['dev'], {
     cwd: path.resolve(__dirname, '../tknz-launchpad'),
     shell: true,
     stdio: ['ignore', 'pipe', 'pipe'],
-    env: process.env,
+    env: { ...process.env, PORT: '3000' },
   });
   const pidFile = path.resolve(__dirname, 'server-pid.txt');
   fs.writeFileSync(pidFile, serverProcess.pid.toString(), 'utf-8');
